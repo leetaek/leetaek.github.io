@@ -1,0 +1,35 @@
+baseURL = "https://leetaek.github.io/"
+languageCode = "ko-kr"
+title = "iOS 개발 기록"
+theme = "PaperMod"
+
+[author]
+name = "Leetaek"
+
+[params]
+author = "Leetaek"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "categories"
+    name = "Categories"
+    url = "/categories/"
+    weight = 30
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 40

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>[Tuist] 모듈화 후에 SwiftUI Preview 에러 (Static &amp; Dynamic Frameworks와 BuildSystem) | iOS 개발 기록</title>
+<meta name="keywords" content="tuist, swiftui, tca, preview, framework">
+<meta name="description" content="에러 발생
+SwiftUI에서 프리뷰(Preview) 기능은 뷰를 코드 작성과 동시에 빠르게 확인할 수 있는 유용한 도구입니다. 빌드와 시뮬레이터 실행 없이도 바로 결과를 볼 수 있기 때문에 View의 레이아웃이나 UI 요소의 개발 효율성을 크게 향상시킵니다.
+하지만, Tuist로 모듈화한 프로젝트에서 TCA(TheComposableArchitecture)를 적용한 SwiftUI 뷰에 프리뷰를 적용하려던 순간, 예상치 못한 에러가 발생했습니다. 
+
+
+Clean Build, DerivedData 초기화, Tuist Clean 등을 해봐도 여전히 프리뷰가 작동하지 않았습니다. 
+결국 에러로 다시 돌아와 상세히 살펴보면 
+== PREVIEW UPDATE ERROR:
+
+    [Remote] JITError: Runtime linking failure
+ - SwiftUI 프리뷰는 뷰를 렌더링 할 때에 JIT(Just In Time) 컴파일러를 통해 런타임에 뷰를 로드함. ">
+<meta name="author" content="Leetaek">
+<link rel="canonical" href="http://localhost:1313/posts/2025-02-27-tuist-swiftui-preview/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.da3211e5ef867bf2b75fd5a6515cfed7195c011e8ab735694e203810a827097b.css" integrity="sha256-2jIR5e&#43;Ge/K3X9WmUVz&#43;1xlcAR6KtzVpTiA4EKgnCXs=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/2025-02-27-tuist-swiftui-preview/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="iOS 개발 기록 (Alt + H)">iOS 개발 기록</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      [Tuist] 모듈화 후에 SwiftUI Preview 에러 (Static &amp; Dynamic Frameworks와 BuildSystem)
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h1>
+    <div class="post-meta"><span title='2025-02-27 17:43:00 +0900 KST'>February 27, 2025</span>&nbsp;·&nbsp;<span>Leetaek</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h3 id="에러-발생">에러 발생<a hidden class="anchor" aria-hidden="true" href="#에러-발생">#</a></h3>
+<p>SwiftUI에서 프리뷰(Preview) 기능은 뷰를 코드 작성과 동시에 빠르게 확인할 수 있는 유용한 도구입니다. 빌드와 시뮬레이터 실행 없이도 바로 결과를 볼 수 있기 때문에 View의 레이아웃이나 UI 요소의 개발 효율성을 크게 향상시킵니다.</p>
+<p>하지만, Tuist로 모듈화한 프로젝트에서 TCA(TheComposableArchitecture)를 적용한 SwiftUI 뷰에 프리뷰를 적용하려던 순간, 예상치 못한 에러가 발생했습니다. </p>
+<p><img loading="lazy" src="/images/tistory/86/01.png"></p>
+<p><img loading="lazy" src="/images/tistory/86/02.png"></p>
+<p>Clean Build, DerivedData 초기화, Tuist Clean 등을 해봐도 여전히 프리뷰가 작동하지 않았습니다. </p>
+<p>결국 에러로 다시 돌아와 상세히 살펴보면 </p>
+<pre tabindex="0"><code>== PREVIEW UPDATE ERROR:
+
+    [Remote] JITError: Runtime linking failure
+</code></pre><p> - SwiftUI 프리뷰는 뷰를 렌더링 할 때에 JIT(Just In Time) 컴파일러를 통해 <strong>런타임</strong>에 뷰를 로드함. </p>
+<p> - 뷰와 관련된 모듈을 런타임에 불러와야 하는데 정적 프레임워크는 빌드 시점에 앱 바이너리에 통합되어 런타임에 로딩이 불가능. </p>
+<pre tabindex="0"><code>    Additional Link Time Errors:
+    Symbols not found: [ ___isPlatformVersionAtLeast ]
+    Symbols not found: [ _swift_getFunctionTypeMetadataGlobalActorBackDeploy ]
+</code></pre><p>- 프리뷰가 동작하기 위해서는 요런 Symbol를 찾아야하는데 찾을수가 없음. </p>
+<p>여기서 Tuist로 모듈화 된 프레임워크들의 연결에 문제가 생겼다 가설을 세우고, 프리뷰와 프레임워크 연결방법의 상관관계에 대해 찾아 보았습니다. </p>
+<p>우선 프레임워크 입니다.</p>
+<h3 id="static-framework-vs-dynamic-framework">Static Framework VS Dynamic Framework<a hidden class="anchor" aria-hidden="true" href="#static-framework-vs-dynamic-framework">#</a></h3>
+<p>Framework</p>
+<p>프레임워크는 여러 프로젝트에서 공통으로 사용할 기능을 하나의 모듈로 만들어 두고 필요할때마다 불러와서 사용할 수 있도록 하는 캡슐화 하는 계층 구조 파일 디렉토리입니다. 구성 요소로 dynamic shared library(.dylib, .framework), Nib파일, asset, 헤더파일 등 다양한 공유 리소스를 포함할 수 있습니다. </p>
+<p>프레임워크는 앱이 빌드되고 실행되는 방식에 따라 정적 프레임워크(Static Framework)와 동적 프레임워크(Dynamic Framework)로 나뉩니다. 이를 잘못 구성하면 런타임 충돌과 같은 문제를 일으킬 수 있지만 모듈화 구조에서 적절하게 조합한다면 빌드 시간과 메모리 사용량, 앱 성능 등을 개선시킬 수 있습니다. </p>
+<p>Static Framework</p>
+<p>정적 프레임워크(static framework)는 정적 라이브러리(static library, .a파일)과 리소스를 포함하는 프레임워크 입니다. 일반적으로 정적 라이브러리는 컴파일 시점에 실행파일에 포함되어, 앱이 실행될 때에 별도의 로딩 과정 없이 바로 사용할 수 있습니다.  </p>
+<p><img loading="lazy" src="/images/tistory/86/03.png"></p>
+<p>정적 프레임워크에서는 정적 라이브러리의 코드가 앱 코드 내의 Heap 메모리에 상주하므로 동일한 정적 라이브러리를 <strong>여러 정적 프레임워크에서 사용하게 되면 코드 중복이 발생하게 됩니다.</strong> 추후에 다행히 알게된 것이지만 동일한 라이브러리를 여러 정적 프레임워크에서 사용하는 경우 중복되지 않도록 컴파일러가 알아서 정리해준다고 합니다. </p>
+<p>- 장점</p>
+<p>앱 실행 속도 향상: 런타임 로딩이 필요 없고 실행 파일에 포함되어 빠르게 실행됨.</p>
+<p>앱 배포시 별도의 파일 필요 없음: 모든 코드가 실행 파일에 포함됨.</p>
+<p>- 단점</p>
+<p>앱 크기 증가: 실행 파일의 크기가 커질 수 있음 </p>
+<p>프레임워크 업데이트가 어려움: 새 버전이 나올 떄마다 전체 앱을 다시 빌드해야 함.</p>
+<p>Dynamic Framework</p>
+<p>동적 프레임워크(Dynamic Framework)는 동적 라이브러리(.dylib)와 리소스를 포함하는 프레임워크입니다. 정적 프레임워크와 달리 앱 실행 파일에 직접 포함되지 않고 앱 실행 시 동적으로 로드됩니다.</p>
+<p>즉, 빌드 시에는 링크 되지만 **실행 파일에는 포함되지 않으며 대신 Dynamic Library Reference가 포함됩니다.**이를 통해 모듈 호출 시에 시에 Stack에 있는 라이브러리가 로드 되어 메모리에 올라갑니다. </p>
+<p><img loading="lazy" src="/images/tistory/86/04.png"></p>
+<p>Xcode에서는 프레임워크를 만들면 기본적으로 동적 프레임워크로 만들어집니다. 동시에 여러 곳에서 사용하는 경우 동일한 버전의 코드 사본을 가지고 공유하므로, 메모리를 효율적으로 사용합니다. 또한 동적으로 연결되어 있으므로 전체 빌드를 다시 하지 않아도 새로운 버전의 프레임워크 사용이 가능합니다. </p>
+<p>- 장점 </p>
+<p>앱 크기 절감: 실행 파일에 포함되지 않고 필요시 메모리에 로드</p>
+<p>공유: 여러 앱에서 동일한 버전의 프레임 워크 사용 </p>
+<p>빠른 업데이트 가능: 프레임워크만 별도로 교체하여 업데이트 가능</p>
+<p>-단점 </p>
+<p>앱 실행시 속도 저하 가능성: 실행 시 동적으로 로딩해야 하므로 속도가 느려질 수 있음</p>
+<p>앱 실행시 프레임워크 파일 필요: 프레임워크 파일이 존재하지 않으면 앱이 실행되지 않음</p>
+<p>그럼 Dynamic Framework에서 Static Libraries를 가지고 있는 경우는 ? </p>
+<p>ChatGPT 선생님이 다음과 같다고 알려주셨습니다 &hellip; </p>
+<blockquote>
+<p>⚙️ Dynamic Framework에서 Static Library를 포함하는 경우 처리 방식</p>
+<p>Dynamic Framework이 Static Library를 포함하면, 컴파일 과정에서 정적 라이브러리의 코드가 동적 프레임워크 내부에 병합.<br>
+즉, 정적 라이브러리의 개별적인 독립성은 사라지고, 동적 프레임워크의 일부로 동작하게 됨.</p>
+<p>1️⃣ 컴파일 타임에서의 동작<br>
+• Static Library가 Dynamic Framework에 포함되면, 정적 라이브러리의 모든 개체 코드(object code) 가 Dynamic Framework 바이너리에 직접 병합됨.<br>
+• 링커(ld)는 Static Library의 개별적인 존재를 유지하지 않고, 그 안의 코드를 Dynamic Framework의 실행 파일(.framework/.dylib)에 일반적인 object code처럼 삽입함.<br>
+• 결과적으로, <strong>Dynamic Framework 내부에서 Static Library의 모든 심볼이 포함된 하나의 실행 바이너리가 생성됨.</strong></p>
+<p>2️⃣ 런타임에서의 동작<br>
+• Dynamic Framework은 실행 시간(런타임)에서 heap에 올라가지만, 포함된 Static Library의 코드는 독립적인 라이브러리가 아니라 이미 Dynamic Framework의 일부로 병합되어 있음.<br>
+• <strong>즉, Static Library 내부 코드도 Dynamic Framework의 코드와 함께 heap에 올라감.</strong><br>
+• 이때, Static Library 내부에서 전역 심볼이나 전역 변수를 사용하면, 해당 심볼이 Dynamic Framework에서 직접 제공하는 것처럼 동작함.</p>
+</blockquote>
+<h3 id="preview와-staticframeworkslibraries">Preview와 StaticFrameworks(Libraries)<a hidden class="anchor" aria-hidden="true" href="#preview와-staticframeworkslibraries">#</a></h3>
+<p>우선, 저는 Tuist를 통해서 TCA를 정적 프레임워크(StaticFrameworks)로 가져와 사용하고 있습니다.</p>
+<p>여러 라이브러리가 내부적으로 정적 링크로 연결되어있는 TCA를 여러곳에서 링크할 때에 중복 링크를 피하기 위해서 입니다.</p>
+<p>아래는 Feature들을 동적 프레임워크로 설정하고 정적 라이브러리인 TCA를 사용할 때에 Tuist에서 띄우는 경고입니다.</p>
+<p><img loading="lazy" src="/images/tistory/86/05.png"></p>
+<p>동적 프레임워크 A와 B가 Static Library(TCA)를 의존하면, 컴파일 때에 각각 TCA를 포함한 실행파일(.framework / .dylib)를 만들게 되고, A와 B가 함께 로드될 때에 duplicate symbol 오류를 발생시킬 수 있습니다.</p>
+<p>그러나 정적 프레임워크로 만들게 된다면 컴파일 시에 정적 라이브러리가 앱 바이너리에 병합되고, 이를 컴파일러가 중복 링크되지 않도록 자동으로 정리해줍니다. </p>
+<p>때문에 Feature 모듈을 정적 프레임워크로 만들어 사용하고 있었는데, 이게 Preview와 연관이 있는 것 같아 중점적으로 찾아보았습니다.</p>
+<p>사실 이 부분이 핵심 요인인데 <a href="https://developer.apple.com/forums/thread/704910">Developer Forums에서 애플 엔지니어의 답변</a>에 따르면 <strong>SwiftUI의 Preview 기능은 정적 프레임워크(라이브러리)에서 지원되지 않습니다.</strong></p>
+<p><img loading="lazy" src="/images/tistory/86/06.png"></p>
+<p>그럼 Static Framework에서 프리뷰를 사용하기 위해서는 어떻게 사용해야 할까요?</p>
+<h4 id="static에서-preview-사용법">Static에서 Preview 사용법<a hidden class="anchor" aria-hidden="true" href="#static에서-preview-사용법">#</a></h4>
+<p>1. Dynamic Library(framework)로 변경</p>
+<p>Static Library를 Library로 변경하여 사용하는 방법입니다. </p>
+<p><img loading="lazy" src="/images/tistory/86/07.png">
+<img loading="lazy" src="/images/tistory/86/08.png"></p>
+<p>RxSwift나 Alamofire와 같이 동적 라이브러리를 지원한다면 해당 라이브러리를 사용하면 됩니다. </p>
+<p>지원하지 않는 경우도 있지만, Tuist를 사용한다면 외부 의존성을 추가할 때에 Package.swift에서 가져오는 설정을 변경할 수 있습니다.</p>
+<p>(Tuist에서는 기본적으로 Static Library로 가져옵니다.)</p>
+<!-- raw HTML omitted -->
+<pre tabindex="0"><code>// 프로젝트 생성시 
+TUIST_FOR_PREVIEW=TRUE tuist generate
+</code></pre><p>다행히도 Tuist에서 환경 변수를 설정할 수 있도록 <a href="https://docs.tuist.dev/en/guides/develop/projects/dynamic-configuration">Dynamic Configuration</a>을 지원합니다.</p>
+<p>덕분에 특별한 설정을 하지 않아도 Tuist generate 명령어 실행 시  환경 변수를 지정할 수 있습니다.(TUIST_XXX 명령어, Environment.<!-- raw HTML omitted --> 형식)</p>
+<p>이 경우 프리뷰가 정상적으로 잘 동작 하지만 어떤 사이드 이펙트가 생길지 몰라서 UI개발을 위해 프리뷰를 사용할 때만 환경 변수를 설정하고 개발하고 있습니다 &hellip; </p>
+<p><img loading="lazy" src="/images/tistory/86/09.png"></p>
+<p>2. 공용 프레임워크로 감싸서 사용</p>
+<p><a href="https://github.com/pointfreeco/swift-composable-architecture?tab=readme-ov-file#installation">TCA</a>와 <a href="https://github.com/tuist/tuist/tree/main/fixtures/app_with_previews">Tuist</a>가 멀티 모듈을 사용할 때에 추천하는 방법입니다. </p>
+<p>중복 링크 문제를 해결하기 위해 공통으로 사용할 의존성을 감싸는 프레임워크를 만들고, 다른 모듈에서 해당 프레임워크에 의존하는 형태로 사용합니다. </p>
+<p><img loading="lazy" src="/images/tistory/86/10.png"></p>
+<p>해당 구조에서 FeatureA, FeatureB, WrapperedTCA는 Dynamic Framework로 선언되어있고, WrappedTCA만  ComposableArchitecture에 직접적인 의존성을 가지고 있습니다. </p>
+<p><img loading="lazy" src="/images/tistory/86/11.png">
+<img loading="lazy" src="/images/tistory/86/12.png"></p>
+<p>해당 구조에서도 Wrappered에 링크된 TCA를 사용하므로 다른 모듈에서 링크가 중복될 가능성이 없으며, Preview 또한 잘 동작합니다. </p>
+<p>프로젝트 github 링크도 같이 남겨둡니다. </p>
+<p><a href="https://github.com/LeeTaek/WrappedTCAToDynamicFramework">WrapperedTCAtoDynamicFramework git 링크 주소</a></p>
+<h3 id="xcode의-build-system">Xcode의 Build System<a hidden class="anchor" aria-hidden="true" href="#xcode의-build-system">#</a></h3>
+<p>Preview에 대한 해결방법을 찾다가 또 이상한 부분을 발견했습니다. </p>
+<p>TCA의 <a href="https://github.com/pointfreeco/swift-composable-architecture#installation">Documents의 Installation 부분</a>을 보면 멀티 타겟(멀티 모듈)을 구성할 때에 TCA를 의존하는 공유 프레임워크(Shared Frameworks)를 만들고 그 후 해당 타겟을 의존성으로 추가하는 방식으로 사용할 것을 권합니다.(Preview 사용법의 2번)</p>
+<p>예시로 TCA의 프로젝트에 포함된 <a href="https://github.com/pointfreeco/swift-composable-architecture/tree/main/Examples/TicTacToe">TicTacToe라는 예시 프로젝트</a>를 보여주는데, 해당 프로젝트의 의존성은 SPM으로 관리됩니다. 프로젝트의 대략적인 구조 중에서 GameSwiftUI 라는 정적 프레임워크의 의존성을 확인하면 다음과 같습니다. </p>
+<blockquote>
+<p>GameSwiftUI  <br>
+└── GameCore  <br>
+    └── ComposableArchitecture (TCA)  </p>
+</blockquote>
+<p>이상하다고 느낀 점은 GameCore와 GameSwiftUI가 정적 프레임워크라는 점입니다. </p>
+<p>해당 구조에서 TCA를 감싼 모듈과 View를 구현한 모듈 모두 프레임워크로 선언되어 있는데, 프리뷰를 돌려보면 잘 돌아갑니다. </p>
+<p><img loading="lazy" src="/images/tistory/86/13.png"></p>
+<p>분명 이해한 바에 따르면 프리뷰에서 Runtime Linking Failure 에러가 떠야하는데 말이죠. </p>
+<p><img loading="lazy" src="/images/tistory/86/14.png">
+<img loading="lazy" src="/images/tistory/86/15.png"></p>
+<p>빌드된 TicTacToe 앱의 번들 패키지를 까보면 정적 linking이지만 빌드된 앱의 패키지를 까보면 __preview.dylib와 \(앱이름).debug.dylib라는 파일이 존재하는걸 확인할 수 있습니다.<br>
+이 파일들은 Debug용으로 빌드된 앱의 패키지에만 존재하며, Release로 빌드된 패키지 내에는 존재하지 않습니다. <br>
+이름부터 __preview.dylib인게 심상치 않아 찾아보니 관련된 문서가 있었습니다. </p>
+<p><a href="https://developer.apple.com/documentation/xcode/understanding-build-product-layout-changes">https://developer.apple.com/documentation/xcode/understanding-build-product-layout-changes</a></p>
+<p> [Understanding build product layout changes in Xcode | Apple Developer Documentation</p>
+<p>There&rsquo;s never been a better time to develop for Apple platforms.</p>
+<p>developer.apple.com](<a href="https://developer.apple.com/documentation/xcode/understanding-build-product-layout-changes">https://developer.apple.com/documentation/xcode/understanding-build-product-layout-changes</a>)</p>
+<p>내용을 요약해보면 다음과 같습니다. </p>
+<p>- <strong>Xcode는 Preview 실행을 위해 __preview.dylib 를 생성하여 동적으로 로드한다.</strong></p>
+<p>- Xcode는 빠른 Preview를 위해__preview.dylib 파일과 \(앱이름).debug.dylib 파일로 나누어 최적화한다.</p>
+<p>- SwiftUI Preview와 일반 Debug 빌드 간에 빌드 산출물을 공유하여 동일한 레이아웃을 그릴 수 있도록 한다. </p>
+<p>결론적으로 <strong>Static Framework 자체는 Preview에서 지원되지 않지만, Xcode가 Preview 실행을 위해 __preview.dylib을 생성하면서 동적으로 실행을 가능하게 한다.</strong> 는 것 같은데 &hellip; </p>
+<p>그럼 왜 내 프로젝트에서는 안됐던거지 &hellip;? </p>
+<p>++)  추측: 모듈의 의존성을 SPM 으로 설정하는 방법과 Tuist로 관리하는 것의 차이인것 같은데&hellip; </p>
+<p>테스트 해보려고 Static Library를 만들어 TCA에 의존성을 추가하고 xcodeBuild에서 .xcframeworks를 만들어보려고 하니 다음과 같은 에러가 뜹니다. </p>
+<p><img loading="lazy" src="/images/tistory/86/16.png"></p>
+<p>해당 설정값들이 무엇을 의미하는지는&hellip;. 아마 SPM으로 설정할 때에는 프리뷰로 확인할 수 있도록 적절하게 dylib로 변경해주는 것 같은데&hellip; 일단 여기까지만 알아보고 추후에 알아봐야겠습니다ㅠ</p>
+<p>결론</p>
+<p>- 기본적으로 Static Framework에서는 SwiftUI의 Preview가 동작하지 않는다. </p>
+<p>- Static Framework과 Dynamic Framework를 적절하게 조합하여 사용하면 개발효용성, 앱의 성능 등을 높일 수 있다. </p>
+<p>- SPM으로 의존성을 관리하면 Xcode가 뒤에서 암튼 뭔가 해서 preview용 dynamic library를 만들어 쓰는거 같은데.. 이건 다음시간에</p>
+<h4 id="참조">참조<a hidden class="anchor" aria-hidden="true" href="#참조">#</a></h4>
+<p><a href="https://devmjun.github.io/archive/FrameworkVsLibrary">https://devmjun.github.io/archive/FrameworkVsLibrary</a></p>
+<p><a href="https://github.com/pointfreeco/swift-composable-architecture/discussions/1680">https://github.com/pointfreeco/swift-composable-architecture/discussions/1680</a></p>
+<p><a href="https://eunjin3786.tistory.com/625">https://eunjin3786.tistory.com/625</a></p>
+<p><a href="https://developer.apple.com/documentation/xcode/understanding-build-product-layout-changes">https://developer.apple.com/documentation/xcode/understanding-build-product-layout-changes</a></p>
+<p><a href="https://neogurhub.tistory.com/entry/%EB%B0%B0%ED%8F%AC-%EA%B0%80%EB%8A%A5%ED%95%9C-FrameWork-%EB%A7%8C%EB%93%A4%EA%B8%B0-XCFramework">https://neogurhub.tistory.com/entry/%EB%B0%B0%ED%8F%AC-%EA%B0%80%EB%8A%A5%ED%95%9C-FrameWork-%EB%A7%8C%EB%93%A4%EA%B8%B0-XCFramework</a></p>
+<p><a href="https://minsone.github.io/ios/mac/ios-framework-part-1-static-framework-dynamic-framework">https://minsone.github.io/ios/mac/ios-framework-part-1-static-framework-dynamic-framework</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/tuist/">Tuist</a></li>
+      <li><a href="http://localhost:1313/tags/swiftui/">Swiftui</a></li>
+      <li><a href="http://localhost:1313/tags/tca/">Tca</a></li>
+      <li><a href="http://localhost:1313/tags/preview/">Preview</a></li>
+      <li><a href="http://localhost:1313/tags/framework/">Framework</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">iOS 개발 기록</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
