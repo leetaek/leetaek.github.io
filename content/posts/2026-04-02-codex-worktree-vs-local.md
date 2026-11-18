@@ -11,7 +11,7 @@ tistory = "https://leetaek.tistory.com/90"
 
 Codex를 쓰다 보면 같은 작업이어도 **Local에서는 잘 되는데 Worktree에서는 막히는 경우**가 있다.
 
-![worktree에서 테스트 돌렸다 발생한 에러](/images/tistory/90/01.png)
+![worktree에서 테스트 돌렸다 발생한 에러](/images/tistory/90/01.webp)
 
 *worktree에서 테스트 돌렸다 발생한 에러*
 

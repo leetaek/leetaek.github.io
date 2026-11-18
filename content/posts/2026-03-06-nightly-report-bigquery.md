@@ -46,7 +46,7 @@ BigQuery는 이번 파이프라인에서 GA4 이벤트가 쌓이는 저장소 �
 
 Nightly Report는 이 데이터를 최근 24시간 기준으로 집계해서 GitHub Issue에 남기므로, 먼저 GA4 → BigQuery Export 연결이 필요하다.
 
-![GCP 콘솔 화면](/images/tistory/88/01.png)
+![GCP 콘솔 화면](/images/tistory/88/01.webp)
 
 *GCP 콘솔 화면*
 
@@ -80,7 +80,7 @@ Nightly Report는 이 데이터를 최근 24시간 기준으로 집계해서 Git
 
 나는 이 단계에서 dataset/테이블 생성만 먼저 확인했고, error_shown 이벤트는 아직 실제 데이터가 없어서 Nightly report에 “No events found”로 찍혔다. 즉, Export는 정상이고 이벤트가 없었던 상태였다.
 
-![](/images/tistory/88/02.png)
+![](/images/tistory/88/02.webp)
 
 이제 앱에서 수집된 GA4 데이터를 BigQuery로 연결하는 과정은 끝났다.
 
@@ -188,8 +188,8 @@ BigQuery 쪽 설정(Export + 인증/권한)이 끝났다면, 이제 GitHub Actio
   2. 지정한 Issue 본문에 YYYY-MM-DD 섹션으로 결과가 append 됨
   3. 이벤트가 없으면 No events found가 찍혀도 정상(파이프라인은 통과한 것)
 
-![](/images/tistory/88/03.png)
+![](/images/tistory/88/03.webp)
 
-![](/images/tistory/88/04.png)
+![](/images/tistory/88/04.webp)
 
 정상 동작한다.

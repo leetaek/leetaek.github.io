@@ -15,9 +15,9 @@ tistory = "https://leetaek.tistory.com/76"
 
 - 아래는 `iOS 16.4`에서 지원 언어와 `iOS 15.5`에서 Vision의 지원 언어이다. 한국어(ko-KR) 가 추가되어 있다.
 
-  ![](/images/tistory/76/01.png)
+  ![](/images/tistory/76/01.webp)
 
-  ![](/images/tistory/76/02.png)
+  ![](/images/tistory/76/02.webp)
 
 # 준비 → 카메라 및 앨범
 
@@ -56,7 +56,7 @@ class OCRViewModel: ObservableObject {
 
 - 기본적으로 이미지로 수직으로 받는 향한다고 가정(아래의 오른쪽 이미지)하고 처리한다. 이미지 방향이 수직이 아닌 경우 init에 orientation 옵션을 줄 수 있는데, 옵션의 방향의 경우 해당 UIImage의 `imageOrientation`프로퍼티로 이미지 방향을 확인할 수 있다. 그냥 사용하면 안되고 `CGImagePropertyOrientation`로 변환하여 사용해야 하는데 방법은 [CGImagePropertyOrientation의 개발자 문서](https://developer.apple.com/documentation/imageio/cgimagepropertyorientation)에 잘 나와있다.
 
-![](/images/tistory/76/03.png)
+![](/images/tistory/76/03.webp)
 
 ### VNRecognizeTextRequest
 
@@ -289,17 +289,17 @@ class OCRViewModel: ObservableObject {
 
 # 결과
 
-![](/images/tistory/76/04.jpg)
+![](/images/tistory/76/04.webp)
 
-![](/images/tistory/76/05.jpg)
+![](/images/tistory/76/05.webp)
 
 - 매우 빠르게 잘 인식한다. 오른쪽에 저런 정신없는 이미지도 나름 인식한다.
 
-![](/images/tistory/76/06.jpg)
+![](/images/tistory/76/06.webp)
 
-![](/images/tistory/76/07.jpg)
+![](/images/tistory/76/07.webp)
 
-![](/images/tistory/76/08.jpg)
+![](/images/tistory/76/08.webp)
 
 - 삐둘빼뚤한 손글씨도 인식하기는 하는데, 세로쓰기는 버거워하는 것 같다. 최고심같이 화려한 이미지도 `Vision`이 많이 아파하는 것 같다.
 

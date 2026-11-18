@@ -47,7 +47,7 @@ tistory = "https://leetaek.tistory.com/87"
 
 나는 낮에 결과를 한 번에 모아 **리뷰하고 결정하고(필요하면 테스트까지)** 처리하는 식으로 에너지를 분리하고 싶었다.
 
-![Codex Automation](/images/tistory/87/01.png)
+![Codex Automation](/images/tistory/87/01.webp)
 
 *Codex Automation*
 
@@ -59,7 +59,7 @@ CLI로 사용하던 **Codex가 최근 MacOS용 앱을 출시했는데 함께 소
 
 ## 기대하는 구조
 
-![Codex Automation이 GitHub 에 올린 Issue를 읽고 수정해서 올린 PR](/images/tistory/87/02.png)
+![Codex Automation이 GitHub 에 올린 Issue를 읽고 수정해서 올린 PR](/images/tistory/87/02.webp)
 
 *Codex Automation이 GitHub 에 올린 Issue를 읽고 수정해서 올린 PR*
 
@@ -92,7 +92,7 @@ CLI로 사용하던 **Codex가 최근 MacOS용 앱을 출시했는데 함께 소
 
 그래서 아래와 같이 라벨을 정리했다.
 
-![정리한 Label](/images/tistory/87/03.png)
+![정리한 Label](/images/tistory/87/03.webp)
 
 *정리한 Label*
 

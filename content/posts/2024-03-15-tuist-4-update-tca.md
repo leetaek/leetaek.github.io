@@ -15,7 +15,7 @@ tistory = "https://leetaek.tistory.com/80"
 
 그러던 어느날, 이런 에러가 출력되었다.
 
-![](/images/tistory/80/01.png)
+![](/images/tistory/80/01.webp)
 
 해당 에러는 Xcode 15.3으로 업데이트 되면서 올라가면서 Xcodebuild의 버전도 같이 올라가면서 생긴 문제인것 같다. Xcodebuild의 버전을 15.2으로 사용하니 원래대로 빌드가 되었다.
 
@@ -29,7 +29,7 @@ Tuist를 업데이트 해도 Xcodebuild 15.3에서는 위의 문제가 뜨는데
 
 ### Dependencies
 
-![](/images/tistory/80/02.png)
+![](/images/tistory/80/02.webp)
 
 Tuist의 SPM을 사용하는 경우 기존에는 Dependencies.swift 에 Dependencies의 swiftPackageManager로 사용하려는 Package들을 넘겨줘야 했다. 4.x로 업데이트 되면서 Dependencies.Swift가 Package.swift로 변경되었다.
 
@@ -89,7 +89,7 @@ let packages = Package(
 
 ### CLI
 
-![](/images/tistory/80/03.png)
+![](/images/tistory/80/03.webp)
 
 Tuist fetch 가 Tuist install로 변경되었다.
 
@@ -104,7 +104,7 @@ Tuist fetch 가 Tuist install로 변경되었다.
 
 이전에 Tuist에는 Swift Macro 관련 기능에 버그가 있었다. 문제는 TCA가 1.4버전부터 Reducer를 Swift Macro를 처리하기 시작해서 Tuist의 SPM으로 가져오면 해당 의존성을 찾지 못하는 에러가 발생했었다.
 
-![](/images/tistory/80/04.png)
+![](/images/tistory/80/04.webp)
 
 해결법을 찾는데 종속성을 직접 추가해야 하는 과정이 필요하다고 해서 Tuist +SPM 대신 일단 Xcode의 SPM으로 추가해서 사용하고 있었다.
 
@@ -118,9 +118,9 @@ Tuist fetch 가 Tuist install로 변경되었다.
 
 ### duplicated symbols
 
-![](/images/tistory/80/05.png)
+![](/images/tistory/80/05.webp)
 
-![](/images/tistory/80/06.png)
+![](/images/tistory/80/06.webp)
 
 *3.x버전에서 사용하던 Dependencies*
 

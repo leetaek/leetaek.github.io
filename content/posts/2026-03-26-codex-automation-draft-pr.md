@@ -250,13 +250,13 @@ Hints
 
 1. GitHub Issues에 테스트용 이슈를 작성하고 status:ready로 올렸다.(가능하면 범위가 좁고, area:* 라벨이 명확한 이슈로.)
 
-![이미 테스트해서 Label이 status:in-progress로 바꼈다.](/images/tistory/89/01.png)
+![이미 테스트해서 Label이 status:in-progress로 바꼈다.](/images/tistory/89/01.webp)
 
 *이미 테스트해서 Label이 status:in-progress로 바꼈다.*
 
 2. Codex에서 프롬프트 테스트 버튼을 눌러 한 번 실행했다.
 
-![우측 상단 테스트 버튼](/images/tistory/89/02.png)
+![우측 상단 테스트 버튼](/images/tistory/89/02.webp)
 
 *우측 상단 테스트 버튼*
 
@@ -266,7 +266,7 @@ Hints
 - 작업 브랜치가 생성된 뒤
 - **Draft PR이 올라온다.** PR 본문에는 요약/변경 내용/테스트 방법/리스크(롤백)까지 포함된다.
 
-![생각보다 잘 올라온다.](/images/tistory/89/03.png)
+![생각보다 잘 올라온다.](/images/tistory/89/03.webp)
 
 *생각보다 잘 올라온다.*
 

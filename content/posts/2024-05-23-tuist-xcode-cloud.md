@@ -14,7 +14,7 @@ Xcode Cloud에 대한 소개와 사용법 보다는 Tuist로 관리되는 프로
 
 Tuist로 관리하는 프로젝트를 실행할 때에 tuist install, tuist generate와 같은 명령어가 필요하다. Tuist를 통해 관리하는 프로젝트는 Xcode Cloud를 어떻게 적용시킬까? 다행히 Xcode Cloud에서는 빌드 스크립트를 작성해서 필요한 설정을 구성할 수 있다.
 
-![Xcode Cloud에서 지원하는 build script 실행 시점](/images/tistory/81/01.png)
+![Xcode Cloud에서 지원하는 build script 실행 시점](/images/tistory/81/01.webp)
 
 *Xcode Cloud에서 지원하는 build script 실행 시점*
 
@@ -24,7 +24,7 @@ post-clone 타이밍에 Tuist의 설치와 실행 명령어를 스크립트로 �
 
 Tuist 의 버전이 4.0 이상으로 올라가면서 이제는 **mise로 설치할 것을 권장한다.** mise로 설치하게 되면서 Tuist 의 버전 트래킹이 용이하게 되는 장점이 생긴다. mise로 Tuist를 설치했다면 프로젝트 루트 경로에 자동으로 .mise.toml파일이 생성되어 있을 것이다.  .mise.toml 파일에 mise를 통해 설치한 도구의 버전이 기록되기 때문에 **.tuist-version 파일을 더이상 사용하지 않아도 된다.**
 
-![.mise.toml 파일](/images/tistory/81/02.png)
+![.mise.toml 파일](/images/tistory/81/02.webp)
 
 *.mise.toml 파일*
 
@@ -46,9 +46,9 @@ Tuist 의 버전이 4.0 이상으로 올라가면서 이제는 **mise로 설치�
 
 그리고 brew로 사용하던 SwiftLint를 Mise를 통해 사용하도록 Build Phase의 스크립트도 변경해주었다. 아래는 프로젝트의 구성 경로와 해당 경로를 기준으로 Tuist edit에서 작성한 스크립트 내용이다. SwiftLint의 룰 파일인 .swiftlint.yml는 프로젝트의 루트 경로에 있다.
 
-![](/images/tistory/81/03.png)
+![](/images/tistory/81/03.webp)
 
-![](/images/tistory/81/04.png)
+![](/images/tistory/81/04.webp)
 
 *프로젝트 파일 경로*
 
@@ -56,11 +56,11 @@ Tuist 의 버전이 4.0 이상으로 올라가면서 이제는 **mise로 설치�
 
 #### 결과
 
-![Xcode Cloud 환경에서 성공적으로 진행됐다.](/images/tistory/81/05.png)
+![Xcode Cloud 환경에서 성공적으로 진행됐다.](/images/tistory/81/05.webp)
 
 *Xcode Cloud 환경에서 성공적으로 진행됐다.*
 
-![그리고 도착한 Success 메일](/images/tistory/81/06.png)
+![그리고 도착한 Success 메일](/images/tistory/81/06.webp)
 
 *그리고 도착한 Success 메일*
 

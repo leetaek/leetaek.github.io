@@ -12,9 +12,9 @@ SwiftUI에서 프리뷰(Preview) 기능은 뷰를 코드 작성과 동시에 빠
 
 하지만, Tuist로 모듈화한 프로젝트에서 TCA(TheComposableArchitecture)를 적용한 SwiftUI 뷰에 프리뷰를 적용하려던 순간, 예상치 못한 에러가 발생했습니다. 
 
-![]( /images/tistory/86/01.png )
+![]( /images/tistory/86/01.webp )
 
-![]( /images/tistory/86/02.png )
+![]( /images/tistory/86/02.webp )
 
 Clean Build, DerivedData 초기화, Tuist Clean 등을 해봐도 여전히 프리뷰가 작동하지 않았습니다. 
 
@@ -54,7 +54,7 @@ Static Framework
 
 정적 프레임워크(static framework)는 정적 라이브러리(static library, .a파일)과 리소스를 포함하는 프레임워크 입니다. 일반적으로 정적 라이브러리는 컴파일 시점에 실행파일에 포함되어, 앱이 실행될 때에 별도의 로딩 과정 없이 바로 사용할 수 있습니다.  
 
-![]( /images/tistory/86/03.png )
+![]( /images/tistory/86/03.webp )
 
 정적 프레임워크에서는 정적 라이브러리의 코드가 앱 코드 내의 Heap 메모리에 상주하므로 동일한 정적 라이브러리를 **여러 정적 프레임워크에서 사용하게 되면 코드 중복이 발생하게 됩니다.** 추후에 다행히 알게된 것이지만 동일한 라이브러리를 여러 정적 프레임워크에서 사용하는 경우 중복되지 않도록 컴파일러가 알아서 정리해준다고 합니다. 
 
@@ -76,7 +76,7 @@ Dynamic Framework
 
 즉, 빌드 시에는 링크 되지만 **실행 파일에는 포함되지 않으며 대신 Dynamic Library Reference가 포함됩니다.**이를 통해 모듈 호출 시에 시에 Stack에 있는 라이브러리가 로드 되어 메모리에 올라갑니다. 
 
-![]( /images/tistory/86/04.png )
+![]( /images/tistory/86/04.webp )
 
 Xcode에서는 프레임워크를 만들면 기본적으로 동적 프레임워크로 만들어집니다. 동시에 여러 곳에서 사용하는 경우 동일한 버전의 코드 사본을 가지고 공유하므로, 메모리를 효율적으로 사용합니다. 또한 동적으로 연결되어 있으므로 전체 빌드를 다시 하지 않아도 새로운 버전의 프레임워크 사용이 가능합니다. 
 
@@ -121,7 +121,7 @@ ChatGPT 선생님이 다음과 같다고 알려주셨습니다 ... 
 
 아래는 Feature들을 동적 프레임워크로 설정하고 정적 라이브러리인 TCA를 사용할 때에 Tuist에서 띄우는 경고입니다.
 
-![]( /images/tistory/86/05.png )
+![]( /images/tistory/86/05.webp )
 
 동적 프레임워크 A와 B가 Static Library(TCA)를 의존하면, 컴파일 때에 각각 TCA를 포함한 실행파일(.framework / .dylib)를 만들게 되고, A와 B가 함께 로드될 때에 duplicate symbol 오류를 발생시킬 수 있습니다.
 
@@ -131,7 +131,7 @@ ChatGPT 선생님이 다음과 같다고 알려주셨습니다 ... 
 
 사실 이 부분이 핵심 요인인데 [Developer Forums에서 애플 엔지니어의 답변](https://developer.apple.com/forums/thread/704910)에 따르면 **SwiftUI의 Preview 기능은 정적 프레임워크(라이브러리)에서 지원되지 않습니다.**
 
-![]( /images/tistory/86/06.png )
+![]( /images/tistory/86/06.webp )
 
 그럼 Static Framework에서 프리뷰를 사용하기 위해서는 어떻게 사용해야 할까요?
 
@@ -141,8 +141,8 @@ ChatGPT 선생님이 다음과 같다고 알려주셨습니다 ... 
 
 Static Library를 Library로 변경하여 사용하는 방법입니다. 
 
-![]( /images/tistory/86/07.png )
-![]( /images/tistory/86/08.png )
+![]( /images/tistory/86/07.webp )
+![]( /images/tistory/86/08.webp )
 
 
 RxSwift나 Alamofire와 같이 동적 라이브러리를 지원한다면 해당 라이브러리를 사용하면 됩니다. 
@@ -164,7 +164,7 @@ TUIST_FOR_PREVIEW=TRUE tuist generate
 
 이 경우 프리뷰가 정상적으로 잘 동작 하지만 어떤 사이드 이펙트가 생길지 몰라서 UI개발을 위해 프리뷰를 사용할 때만 환경 변수를 설정하고 개발하고 있습니다 ... 
 
-![]( /images/tistory/86/09.png )
+![]( /images/tistory/86/09.webp )
 
 2\. 공용 프레임워크로 감싸서 사용
 
@@ -172,13 +172,13 @@ TUIST_FOR_PREVIEW=TRUE tuist generate
 
 중복 링크 문제를 해결하기 위해 공통으로 사용할 의존성을 감싸는 프레임워크를 만들고, 다른 모듈에서 해당 프레임워크에 의존하는 형태로 사용합니다. 
 
-![]( /images/tistory/86/10.png )
+![]( /images/tistory/86/10.webp )
 
 
 해당 구조에서 FeatureA, FeatureB, WrapperedTCA는 Dynamic Framework로 선언되어있고, WrappedTCA만  ComposableArchitecture에 직접적인 의존성을 가지고 있습니다. 
 
-![]( /images/tistory/86/11.png )
-![]( /images/tistory/86/12.png )
+![]( /images/tistory/86/11.webp )
+![]( /images/tistory/86/12.webp )
 
 
 
@@ -204,13 +204,13 @@ TCA의 [Documents의 Installation 부분](https://github.com/pointfreeco/swift-c
 
 해당 구조에서 TCA를 감싼 모듈과 View를 구현한 모듈 모두 프레임워크로 선언되어 있는데, 프리뷰를 돌려보면 잘 돌아갑니다. 
 
-![]( /images/tistory/86/13.png )
+![]( /images/tistory/86/13.webp )
 
 
 분명 이해한 바에 따르면 프리뷰에서 Runtime Linking Failure 에러가 떠야하는데 말이죠. 
 
-![]( /images/tistory/86/14.png )
-![]( /images/tistory/86/15.png )
+![]( /images/tistory/86/14.webp )
+![]( /images/tistory/86/15.webp )
 
 
 빌드된 TicTacToe 앱의 번들 패키지를 까보면 정적 linking이지만 빌드된 앱의 패키지를 까보면 \_\_preview.dylib와 \\(앱이름).debug.dylib라는 파일이 존재하는걸 확인할 수 있습니다.  
@@ -241,7 +241,7 @@ developer.apple.com](https://developer.apple.com/documentation/xcode/understandi
 
 테스트 해보려고 Static Library를 만들어 TCA에 의존성을 추가하고 xcodeBuild에서 .xcframeworks를 만들어보려고 하니 다음과 같은 에러가 뜹니다. 
 
-![]( /images/tistory/86/16.png )
+![]( /images/tistory/86/16.webp )
 
 해당 설정값들이 무엇을 의미하는지는.... 아마 SPM으로 설정할 때에는 프리뷰로 확인할 수 있도록 적절하게 dylib로 변경해주는 것 같은데... 일단 여기까지만 알아보고 추후에 알아봐야겠습니다ㅠ
 

@@ -1,0 +1,5 @@
+# Hugo 빌드 결과 — 배포는 Actions 가 새로 빌드한다
+/public/
+/resources/_gen/
+.hugo_build.lock
+.DS_Store
