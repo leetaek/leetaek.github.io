@@ -24,7 +24,7 @@
     function sync() {
       var frame = document.querySelector('iframe.giscus-frame');
       if (!frame) return;
-      var theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+      var theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
       frame.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, 'https://giscus.app');
     }
     var toggle = document.getElementById('theme-toggle');

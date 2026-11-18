@@ -1,0 +1,82 @@
+/* 글 목차
+   - 넓은 화면(1280px 이상): 본문 오른쪽 빈자리에 두고, 스크롤해도 화면에 붙어 따라온다
+   - 좁은 화면: 테마 기본대로 본문 위 접이식 상자
+   - 지금 읽는 제목은 .active 로 강조(layouts/partials/extend_footer.html) */
+
+.toc a.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+@media (min-width: 1280px) {
+    .post-single {
+        position: relative;
+    }
+
+    /* 글 전체 높이만큼 늘인 칸 안에서 목차가 sticky 로 따라온다 */
+    .post-single > .toc {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(100% + var(--gap));
+        width: 240px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+    }
+
+    [data-theme="dark"] .post-single > .toc {
+        background: none;
+    }
+
+    .post-single > .toc details {
+        position: sticky;
+        top: 32px;
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+        padding-inline-start: 12px;
+        border-inline-start: 1px solid var(--border);
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .post-single > .toc summary {
+        cursor: default;
+        margin-inline-start: 0;
+        margin-bottom: 8px;
+        color: var(--secondary);
+        list-style: none;
+    }
+
+    .post-single > .toc summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .post-single > .toc .inner {
+        margin: 0;
+        padding: 0;
+        opacity: 1;
+    }
+
+    .post-single > .toc li {
+        margin: 4px 0;
+    }
+
+    .post-single > .toc li ul {
+        margin-inline-start: 12px;
+    }
+
+    .post-single > .toc a {
+        color: var(--secondary);
+    }
+
+    .post-single > .toc a:hover {
+        color: var(--primary);
+        box-shadow: none;
+    }
+
+    .post-single > .toc a.active {
+        color: var(--primary);
+    }
+}

@@ -1,0 +1,59 @@
+{{- /* 글 목차: 넓은 화면에서는 늘 펼치고, 지금 읽는 제목을 강조한다(스타일은 assets/css/extended/toc.css).
+       테마가 footer 를 페이지 종류별로 캐시(partialCached)하므로 페이지 조건을 걸지 않고, 목차가 없으면 스크립트가 바로 끝난다. */ -}}
+<script>
+  (function () {
+    var toc = document.querySelector('.post-single > .toc');
+    if (!toc) return;
+    var details = toc.querySelector('details');
+    var wide = window.matchMedia('(min-width: 1280px)');
+
+    // 오른쪽에 붙어 있을 때는 접을 이유가 없으니 펼쳐 둔다
+    function applyWide() { if (wide.matches && details) details.open = true; }
+    applyWide();
+    wide.addEventListener('change', applyWide);
+    if (details) {
+      details.querySelector('summary').addEventListener('click', function (e) {
+        if (wide.matches) e.preventDefault();
+      });
+    }
+
+    var links = {};
+    toc.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      links[decodeURIComponent(a.getAttribute('href').slice(1))] = a;
+    });
+    var headings = Array.prototype.filter.call(
+      document.querySelectorAll('.post-content :is(h1,h2,h3,h4,h5,h6)[id]'),
+      function (h) { return links[h.id]; }
+    );
+    if (!headings.length) return;
+
+    var current = null;
+    function update() {
+      // 화면 위쪽 1/4 지점을 지난 마지막 제목이 지금 읽는 곳이다
+      var line = window.innerHeight / 4;
+      var active = headings[0];
+      for (var i = 0; i < headings.length; i++) {
+        if (headings[i].getBoundingClientRect().top <= line) active = headings[i];
+        else break;
+      }
+      if (active === current) return;
+      if (current) links[current.id].classList.remove('active');
+      current = active;
+      var link = links[current.id];
+      link.classList.add('active');
+      // 목차가 길어 스크롤되면 강조한 항목이 보이게 한다
+      if (wide.matches && details && details.scrollHeight > details.clientHeight) {
+        var top = link.offsetTop - details.clientHeight / 2;
+        details.scrollTo({ top: top });
+      }
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; update(); });
+    }, { passive: true });
+    update();
+  })();
+</script>
