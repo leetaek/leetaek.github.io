@@ -103,7 +103,7 @@ go:fix + status:ready만 대상으로 삼고, 진행 중인 이슈(status:in-pro
 ```
 Issue selection (pick ONE, via gh)
 - Try p0:
-  gh issue list -R LeeTaek/Carve -S 'is:issue is:open label:go:fix label:status:ready -label:status:in-progress label:prio:p0' --json number,title,updatedAt,labels --limit 20
+  gh issue list -R leetaek/Carve -S 'is:issue is:open label:go:fix label:status:ready -label:status:in-progress label:prio:p0' --json number,title,updatedAt,labels --limit 20
 - Else p1, else p2 with the same format.
 - Choose exactly one issue: the most recently updated (max updatedAt).
 - If none, stop without making any changes.
@@ -118,7 +118,7 @@ Issue selection (pick ONE, via gh)
 ```
 Issue selection (pick ONE, via gh)
 - Try p0:
-  gh issue list -R LeeTaek/Carve -S 'is:issue is:open label:go:fix label:status:ready -label:status:in-progress label:prio:p0' --json number,title,updatedAt,labels --limit 20
+  gh issue list -R leetaek/Carve -S 'is:issue is:open label:go:fix label:status:ready -label:status:in-progress label:prio:p0' --json number,title,updatedAt,labels --limit 20
 - Else p1, else p2 with the same format.
 - Choose exactly one issue: the most recently updated (max updatedAt).
 - If none, stop without making any changes.
@@ -190,7 +190,7 @@ Goal
 Issue selection (pick ONE, via gh)
 
 - Try p0:
-gh issue list -R LeeTaek/Carve -S 'is:issue is:open label:go:fix label:status:ready -label:status:in-progress label:prio:p0' --json number,title,updatedAt,labels --limit 20
+gh issue list -R leetaek/Carve -S 'is:issue is:open label:go:fix label:status:ready -label:status:in-progress label:prio:p0' --json number,title,updatedAt,labels --limit 20
 - Else p1, else p2 with the same format.
 - Choose exactly one issue: the most recently updated (max updatedAt).
 - If none, stop without making any changes.

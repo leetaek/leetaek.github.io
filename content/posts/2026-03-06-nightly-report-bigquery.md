@@ -106,7 +106,7 @@ GitHub Actions는 BigQuery를 직접 읽지 않고, **Service Account를 ‘대�
 - 위치: [GCP 콘솔](https://console.cloud.google.com/welcome) → IAM & Admin(IAM 및 관리자) → Workload Identity Federation(워크로드 아이덴티티 제휴)
 - 역할:
   - Pool: 외부 인증(여기선 GitHub OIDC)을 관리하기 위해 담아두는 컨테이너.
-  - Provider: 실제로 “GitHub OIDC를 신뢰한다”고 설정하는 곳. pool 안에서 provider를 만들고, repository == LeeTaek/Carve 조건(내 경우)을 걸어 허용 범위를 레포 단위로 제한한다.
+  - Provider: 실제로 “GitHub OIDC를 신뢰한다”고 설정하는 곳. pool 안에서 provider를 만들고, repository == leetaek/Carve 조건(내 경우)을 걸어 허용 범위를 레포 단위로 제한한다.
 
 **3) Service Account(서비스 계정)에 대리 권한 부여**
 

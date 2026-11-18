@@ -7,7 +7,7 @@ ShowBreadCrumbs = false
 searchHidden = true
 +++
 
-iOS 개발자 Leetaek 입니다. 개발하며 배운 것과 만든 것을 이곳에 기록합니다.
+iOS 개발자 leetaek 입니다. 개발하며 배운 것과 만든 것을 이곳에 기록합니다.
 
 ## 링크
 
