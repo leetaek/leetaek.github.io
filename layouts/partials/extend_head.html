@@ -1,0 +1,9 @@
+{{- /* Google AdSense — hugo.toml 의 params.adsenseClient(ca-pub-…)가 있을 때만, 배포 빌드에서만 넣는다.
+       사이트 확인용 meta 와 자동 광고 스크립트. 광고 위치는 AdSense 콘솔의 자동 광고 설정이 정한다.
+       ads.txt 는 static/ads.txt 에 둔다. */ -}}
+{{- with site.Params.adsenseClient }}
+{{- if hugo.IsProduction }}
+<meta name="google-adsense-account" content="{{ . }}">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ . }}" crossorigin="anonymous"></script>
+{{- end }}
+{{- end }}
