@@ -151,7 +151,7 @@ RxSwift나 Alamofire와 같이 동적 라이브러리를 지원한다면 해당 
 
 (Tuist에서는 기본적으로 Static Library로 가져옵니다.)
 
-<script src="https://gist.github.com/LeeTaek/2cb84cb0cd9b9428505d696fbefef219.js"></script>
+<script src="https://gist.github.com/leetaek/2cb84cb0cd9b9428505d696fbefef219.js"></script>
 
 ```
 // 프로젝트 생성시 
@@ -186,7 +186,7 @@ TUIST_FOR_PREVIEW=TRUE tuist generate
 
 프로젝트 github 링크도 같이 남겨둡니다. 
 
-[WrapperedTCAtoDynamicFramework git 링크 주소](https://github.com/LeeTaek/WrappedTCAToDynamicFramework)
+[WrapperedTCAtoDynamicFramework git 링크 주소](https://github.com/leetaek/WrappedTCAToDynamicFramework)
 
 ### Xcode의 Build System
 

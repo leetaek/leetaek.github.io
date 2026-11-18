@@ -2,34 +2,69 @@ baseURL = "https://leetaek.github.io/"
 languageCode = "ko-kr"
 title = "iOS 개발 기록"
 theme = "PaperMod"
+hasCJKLanguage = true
 
-[author]
-name = "Leetaek"
+[pagination]
+  pagerSize = 10
+
+# 검색 페이지(/search/)가 읽는 색인(index.json)을 함께 만든다.
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 [params]
-author = "Leetaek"
+  author = "Leetaek"
+  description = "iOS 개발을 하며 배운 것과 만든 것을 기록합니다."
+  defaultTheme = "auto"
+  mainSections = ["posts"]
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+
+  [params.homeInfoParams]
+    Title = "iOS 개발 기록"
+    Content = """
+iOS 개발을 하며 배운 것과 만든 것을 기록합니다.
+
+2026년 11월 이전 글은 [Tistory](https://leetaek.tistory.com/) 에 있습니다.
+"""
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/leetaek"
+
+  [[params.socialIcons]]
+    name = "rss"
+    url = "/index.xml"
 
 [menu]
   [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
+    identifier = "blog"
+    name = "Blog"
     url = "/posts/"
     weight = 10
+
+  [[menu.main]]
+    identifier = "archives"
+    name = "Archive"
+    url = "/archives/"
+    weight = 20
 
   [[menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
-    weight = 20
+    weight = 30
 
   [[menu.main]]
-    identifier = "categories"
-    name = "Categories"
-    url = "/categories/"
-    weight = 30
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 40
 
   [[menu.main]]
     identifier = "about"
     name = "About"
     url = "/about/"
-    weight = 40
+    weight = 50
