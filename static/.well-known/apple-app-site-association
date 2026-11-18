@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["H4MSW7FUBB.kr.co.carve.leetaek"],
+        "components": [
+          { "/": "/carve/join*", "comment": "새기다(Carve) 그룹 챌린지 초대 링크" }
+        ]
+      }
+    ]
+  }
+}

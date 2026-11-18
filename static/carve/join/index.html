@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="format-detection" content="telephone=no">
+<title>새기다 그룹 초대</title>
+<style>
+  :root {
+    --paper: #f7f3ea;
+    --card: #fffdf8;
+    --ink: #2b2620;
+    --secondary: #7a7064;
+    --line: #e4dccd;
+    --accent: #6b4f2e;
+    --accent-ink: #fffdf8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #1c1a17;
+      --card: #26231f;
+      --ink: #f1ebe0;
+      --secondary: #a89e90;
+      --line: #3a352e;
+      --accent: #c9a77a;
+      --accent-ink: #1c1a17;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 32px 24px 24px;
+    text-align: center;
+  }
+  .brand { font-family: "Nanum Myeongjo", "AppleMyungjo", serif; font-size: 15px; color: var(--secondary); letter-spacing: 0.08em; margin: 0 0 12px; }
+  h1 { font-size: 22px; line-height: 1.4; margin: 0 0 8px; word-break: keep-all; }
+  .lead { font-size: 15px; line-height: 1.6; color: var(--secondary); margin: 0 0 24px; word-break: keep-all; }
+  .label { font-size: 13px; font-weight: 600; color: var(--secondary); margin: 0; }
+  .code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin: 6px 0 20px;
+    user-select: all;
+    -webkit-user-select: all;
+  }
+  .code.missing { font-size: 17px; font-family: inherit; font-weight: 500; letter-spacing: 0; color: var(--secondary); }
+  .buttons { display: flex; flex-direction: column; gap: 10px; }
+  .button {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .note { font-size: 13px; line-height: 1.6; color: var(--secondary); margin: 20px 0 0; word-break: keep-all; }
+  .toast { min-height: 20px; font-size: 13px; color: var(--accent); margin: 8px 0 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand" data-t="brand">새기다</p>
+  <h1 data-t="title">그룹 챌린지에 초대받았어요</h1>
+  <p class="lead" data-t="lead">새기다 앱에서 아래 초대 코드로 그룹에 함께할 수 있어요.</p>
+
+  <p class="label" data-t="codeLabel">초대 코드</p>
+  <p class="code" id="code">—</p>
+
+  <div class="buttons">
+    <a class="button primary" id="open" data-t="open" href="carve://join">앱에서 열기</a>
+    <button class="button" id="copy" type="button" data-t="copy">코드 복사</button>
+    <a class="button" id="store" data-t="store" href="https://apps.apple.com/app/id6502980733">App Store에서 설치</a>
+  </div>
+  <p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+  <p class="note" data-t="note">앱을 처음 설치했다면 코드를 복사한 뒤 앱에서 나의 서재 › 챌린지 › 코드로 참여를 열고 붙여 넣어 주세요. 새기다는 iPad 앱이에요.</p>
+</main>
+<script>
+(function () {
+  "use strict";
+  var texts = {
+    ko: {
+      brand: "새기다",
+      title: "그룹 챌린지에 초대받았어요",
+      lead: "새기다 앱에서 아래 초대 코드로 그룹에 함께할 수 있어요.",
+      codeLabel: "초대 코드",
+      open: "앱에서 열기",
+      copy: "코드 복사",
+      store: "App Store에서 설치",
+      note: "앱을 처음 설치했다면 코드를 복사한 뒤 앱에서 나의 서재 › 챌린지 › 코드로 참여를 열고 붙여 넣어 주세요. 새기다는 iPad 앱이에요.",
+      copied: "코드를 복사했어요.",
+      copyFailed: "복사하지 못했어요. 코드를 길게 눌러 복사해 주세요.",
+      missing: "링크에 초대 코드가 없어요. 초대한 사람에게 코드를 다시 받아 주세요.",
+      docTitle: "새기다 그룹 초대"
+    },
+    en: {
+      brand: "Carve",
+      title: "You're invited to a group challenge",
+      lead: "Join the group in the Carve app with the invite code below.",
+      codeLabel: "Invite code",
+      open: "Open in App",
+      copy: "Copy Code",
+      store: "Get it on the App Store",
+      note: "If you just installed the app, copy the code, then open My Library › Challenges › Join with Code in the app and paste it. Carve is an iPad app.",
+      copied: "Code copied.",
+      copyFailed: "Couldn't copy. Press and hold the code to copy it.",
+      missing: "This link has no invite code. Ask the person who invited you for the code.",
+      docTitle: "Carve Group Invite"
+    }
+  };
+  var lang = (navigator.language || "ko").toLowerCase().indexOf("ko") === 0 ? "ko" : "en";
+  var t = texts[lang];
+  document.documentElement.lang = lang;
+  document.title = t.docTitle;
+  Array.prototype.forEach.call(document.querySelectorAll("[data-t]"), function (element) {
+    element.textContent = t[element.getAttribute("data-t")];
+  });
+
+  // 앱의 InviteCodeRule.normalize 와 같은 규칙 — Crockford base32 8자(O→0, I·L→1, U 없음).
+  function normalize(input) {
+    var cleaned = String(input || "").toUpperCase().replace(/[^0-9A-Z]/g, "")
+      .replace(/O/g, "0").replace(/[IL]/g, "1");
+    return /^[0-9A-HJKMNP-TV-Z]{8}$/.test(cleaned) ? cleaned : null;
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var code = normalize(params.get("code"));
+  var codeElement = document.getElementById("code");
+  var openButton = document.getElementById("open");
+  var copyButton = document.getElementById("copy");
+  var toast = document.getElementById("toast");
+
+  if (!code) {
+    codeElement.textContent = t.missing;
+    codeElement.classList.add("missing");
+    openButton.hidden = true;
+    copyButton.hidden = true;
+    return;
+  }
+
+  var display = code.slice(0, 4) + "-" + code.slice(4);
+  codeElement.textContent = display;
+  openButton.href = "carve://join?code=" + code;
+
+  function show(message) { toast.textContent = message; }
+
+  function fallbackCopy() {
+    var area = document.createElement("textarea");
+    area.value = display;
+    area.setAttribute("readonly", "");
+    area.style.position = "absolute";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    area.select();
+    area.setSelectionRange(0, area.value.length);
+    var copied = false;
+    try { copied = document.execCommand("copy"); } catch (error) { copied = false; }
+    document.body.removeChild(area);
+    show(copied ? t.copied : t.copyFailed);
+  }
+
+  copyButton.addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(display).then(function () { show(t.copied); }, fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
+})();
+</script>
+</body>
+</html>
