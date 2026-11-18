@@ -11,6 +11,10 @@ hasCJKLanguage = true
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
+# 옮겨 온 글의 gist 임베드(<script>)를 그대로 내보낸다.
+[markup.goldmark.renderer]
+  unsafe = true
+
 [params]
   author = "Leetaek"
   description = "iOS 개발을 하며 배운 것과 만든 것을 기록합니다."

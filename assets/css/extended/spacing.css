@@ -1,0 +1,49 @@
+/* 글 본문 간격
+   - 문단끼리: 빈 줄 한 줄
+   - 제목(#, ##, ### …) 위: 빈 줄 두세 줄
+   - 이미지 위아래: 기본 여백에 한 줄 더 */
+.post-content {
+    --paragraph-gap: 1lh;
+    /* 본문 한 줄(18px × 1.6 ≈ 29px)의 2.5배. lh 를 쓰면 큰 제목에서 그 제목의 줄 높이로 계산돼 너무 벌어진다 */
+    --heading-gap: 72px;
+    --image-extra-gap: 1lh;
+}
+
+.post-content p,
+.post-content ul,
+.post-content ol,
+.post-content dl,
+.post-content figure,
+.post-content blockquote,
+.post-content table,
+.post-content .highlight,
+.post-content > pre {
+    margin-bottom: var(--paragraph-gap);
+}
+
+/* 리스트 안의 문단은 리스트 간격을 따른다 */
+.post-content li > p {
+    margin-bottom: 0.5lh;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    margin-top: var(--heading-gap);
+}
+
+/* 글 맨 처음 제목은 위로 띄우지 않는다 */
+.post-content > :first-child {
+    margin-top: 0;
+}
+
+.post-content img {
+    margin: calc(1rem + var(--image-extra-gap)) 0;
+}
+
+.post-content img[src*="#center"] {
+    margin: calc(1rem + var(--image-extra-gap)) auto;
+}
