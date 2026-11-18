@@ -6,6 +6,10 @@ hasCJKLanguage = true
 # 테마의 robots.txt(sitemap 주소 포함)를 내보낸다.
 enableRobotsTXT = true
 
+# GA4 방문 통계(속성 leetaek.github.io, leerusa 계정). 테마가 배포 빌드에서만 Hugo 내장 google_analytics 를 넣는다
+[services.googleAnalytics]
+  ID = "G-H4TYQ3W5D8"
+
 [pagination]
   pagerSize = 10
 
