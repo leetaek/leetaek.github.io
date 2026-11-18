@@ -1,0 +1,36 @@
+{{- /* giscus 댓글 — GitHub Discussions(Announcements 분류)에 글마다 토론을 하나씩 만든다.
+       설정 원본: https://giscus.app (저장소에 giscus 앱이 설치돼 있어야 댓글이 써진다) */ -}}
+<div class="comments">
+  <script src="https://giscus.app/client.js"
+          data-repo="leetaek/leetaek.github.io"
+          data-repo-id="R_kgDORUjzKw"
+          data-category="Announcements"
+          data-category-id="DIC_kwDORUjzK84DLY7y"
+          data-mapping="pathname"
+          data-strict="1"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="{{ if eq site.Params.defaultTheme "dark" }}dark{{ else if eq site.Params.defaultTheme "light" }}light{{ else }}preferred_color_scheme{{ end }}"
+          data-lang="ko"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
+<script>
+  // 블로그의 라이트 · 다크 전환 버튼을 누르면 댓글 창 테마도 따라 바꾼다.
+  (function () {
+    function sync() {
+      var frame = document.querySelector('iframe.giscus-frame');
+      if (!frame) return;
+      var theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+      frame.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, 'https://giscus.app');
+    }
+    var toggle = document.getElementById('theme-toggle');
+    if (toggle) toggle.addEventListener('click', function () { setTimeout(sync, 0); });
+    window.addEventListener('message', function (e) {
+      if (e.origin === 'https://giscus.app') sync();
+    }, { once: true });
+  })();
+</script>
