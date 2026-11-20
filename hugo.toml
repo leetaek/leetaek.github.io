@@ -50,6 +50,11 @@ iOS 개발을 하며 배운 것과 만든 것을 기록합니다.
     name = "github"
     url = "https://github.com/leetaek"
 
+  # 새기다(Carve) 앱 계정 — 앱 소개는 /carve/
+  [[params.socialIcons]]
+    name = "instagram"
+    url = "https://www.instagram.com/saegida.bible/"
+
   [[params.socialIcons]]
     name = "rss"
     url = "/index.xml"
