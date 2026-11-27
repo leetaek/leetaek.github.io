@@ -116,7 +116,7 @@ Swift 6.4로 빌드 환경을 맞추고 언어 모드를 6으로 올릴 때도 �
 
 그렇다고 손으로 썼다고 다 아는 것도 아니었습니다. 앞 글에 적은, 출시 전에 발견한 설정값 초기화 문제는 2024년에 기존 구현을 참고해 새기다에 맞게 고쳐 쓴 UserDefaults 확장에서 시작됐습니다.
 
-[블로그에 정리까지 했던 코드](https://leetaek.tistory.com/82)였는데 2년 뒤 Swift 6.4 컴파일러로 빌드하자 기본 타입 설정에도 이 확장이 쓰이면서 이전 버전이 남긴 설정값을 덮어썼습니다. 직접 쓰고 글까지 썼지만 그런 위험이 있는 줄은 몰랐습니다. 문제를 잡은 건 제 기억이 아니라 테스트와 업데이트 재현이었습니다.
+[블로그에 정리까지 했던 코드](/posts/2024-07-18-tca-codable-appstorage/)였는데 2년 뒤 Swift 6.4 컴파일러로 빌드하자 기본 타입 설정에도 이 확장이 쓰이면서 이전 버전이 남긴 설정값을 덮어썼습니다. 직접 쓰고 글까지 썼지만 그런 위험이 있는 줄은 몰랐습니다. 문제를 잡은 건 제 기억이 아니라 테스트와 업데이트 재현이었습니다.
 
 새기다를 쓰는 사람에게는 제가 몇 줄을 썼는지보다 오랜만에 앱을 열었을 때 예전에 쓴 필기가 그대로 있는지가 더 중요할 겁니다. 그래도
 제 손으로 완성했다는 감각이 옅어지는 건 조금 아쉽습니다. 두 달을 보내고도 아직 답은 잘 모르겠습니다.
@@ -126,7 +126,7 @@ Swift 6.4로 빌드 환경을 맞추고 언어 모드를 6으로 올릴 때도 �
 ## 참고
 
 - [앞 글: [AI] 코드를 덜 읽는 대신 무엇을 확인했나: 새기다의 AI 개발 기록](/posts/2026-11-09-ai-orchestration-06-verification/)
-- [[TCA] SharedState의 UserDefaults 확장하기 (CodableAppStorageKey)](https://leetaek.tistory.com/82)
+- [[TCA] SharedState의 UserDefaults 확장하기 (CodableAppStorageKey)](/posts/2024-07-18-tca-codable-appstorage/)
 - [Lauren Tan, How I Shipped 2000 PRs Last Month — Trusting AI Agents (YouTube)](https://www.youtube.com/watch?v=NjoZoUm85x0)
 - [Mitchell Hashimoto, My AI Adoption Journey](https://mitchellh.com/writing/my-ai-adoption-journey)
 - [Birgitta Böckeler, Harness Engineering - first thoughts](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html)
