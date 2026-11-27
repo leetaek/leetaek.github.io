@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680" font-family="-apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif">
+  <defs>
+    <marker id="down" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4A72C4"/>
+    </marker>
+    <marker id="up" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E07A1F"/>
+    </marker>
+    <marker id="gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8A8A85"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="680" rx="18" fill="#FAFAF7"/>
+
+  <!-- App -->
+  <rect x="120" y="40" width="960" height="96" rx="12" fill="#E8F0FE" stroke="#4A72C4" stroke-width="2"/>
+  <text x="600" y="80" text-anchor="middle" font-size="26" font-weight="700" fill="#1F2A44">App</text>
+  <text x="600" y="113" text-anchor="middle" font-size="18" fill="#3A4560">AppCoordinator — 자식이 보낸 delegate 를 switch 해서 다음 화면을 정합니다</text>
+
+  <!-- App ↔ Feature 화살표 -->
+  <g stroke-width="3" fill="none">
+    <line x1="211" y1="138" x2="211" y2="266" stroke="#4A72C4" marker-end="url(#down)"/>
+    <line x1="239" y1="268" x2="239" y2="140" stroke="#E07A1F" marker-end="url(#up)"/>
+    <line x1="461" y1="138" x2="461" y2="266" stroke="#4A72C4" marker-end="url(#down)"/>
+    <line x1="489" y1="268" x2="489" y2="140" stroke="#E07A1F" marker-end="url(#up)"/>
+    <line x1="711" y1="138" x2="711" y2="266" stroke="#4A72C4" marker-end="url(#down)"/>
+    <line x1="739" y1="268" x2="739" y2="140" stroke="#E07A1F" marker-end="url(#up)"/>
+    <line x1="961" y1="138" x2="961" y2="266" stroke="#4A72C4" marker-end="url(#down)"/>
+    <line x1="989" y1="268" x2="989" y2="140" stroke="#E07A1F" marker-end="url(#up)"/>
+  </g>
+  <text x="350" y="194" text-anchor="middle" font-size="16" fill="#4A72C4">↓ scope 해서 화면을 띄움</text>
+  <text x="350" y="222" text-anchor="middle" font-size="16" fill="#E07A1F">↑ .delegate(…) 로 알림</text>
+
+  <!-- Feature 모듈 -->
+  <g>
+    <rect x="120" y="270" width="210" height="90" rx="12" fill="#EAF6EC" stroke="#4E9A5B" stroke-width="2"/>
+    <text x="225" y="309" text-anchor="middle" font-size="22" font-weight="700" fill="#1E3B24">서재</text>
+    <text x="225" y="337" text-anchor="middle" font-size="16" fill="#3D5A43">Feature</text>
+
+    <rect x="370" y="270" width="210" height="90" rx="12" fill="#EAF6EC" stroke="#4E9A5B" stroke-width="2"/>
+    <text x="475" y="309" text-anchor="middle" font-size="22" font-weight="700" fill="#1E3B24">필사</text>
+    <text x="475" y="337" text-anchor="middle" font-size="16" fill="#3D5A43">Feature</text>
+
+    <rect x="620" y="270" width="210" height="90" rx="12" fill="#EAF6EC" stroke="#4E9A5B" stroke-width="2"/>
+    <text x="725" y="309" text-anchor="middle" font-size="22" font-weight="700" fill="#1E3B24">설정</text>
+    <text x="725" y="337" text-anchor="middle" font-size="16" fill="#3D5A43">Feature</text>
+
+    <rect x="870" y="270" width="210" height="90" rx="12" fill="#EAF6EC" stroke="#4E9A5B" stroke-width="2"/>
+    <text x="975" y="309" text-anchor="middle" font-size="22" font-weight="700" fill="#1E3B24">챌린지 · …</text>
+    <text x="975" y="337" text-anchor="middle" font-size="16" fill="#3D5A43">Feature</text>
+  </g>
+  <g font-size="22" font-weight="700" fill="#D9534F" text-anchor="middle">
+    <text x="350" y="323">✕</text>
+    <text x="600" y="323">✕</text>
+    <text x="850" y="323">✕</text>
+  </g>
+
+  <!-- Feature → 공용 모듈 -->
+  <g stroke="#8A8A85" stroke-width="2.5" fill="none">
+    <line x1="225" y1="362" x2="225" y2="464" marker-end="url(#gray)"/>
+    <line x1="475" y1="362" x2="475" y2="464" marker-end="url(#gray)"/>
+    <line x1="725" y1="362" x2="725" y2="464" marker-end="url(#gray)"/>
+    <line x1="975" y1="362" x2="975" y2="464" marker-end="url(#gray)"/>
+  </g>
+  <text x="350" y="420" text-anchor="middle" font-size="16" fill="#6A6A65">import</text>
+
+  <!-- 공용 모듈 -->
+  <rect x="120" y="468" width="960" height="92" rx="12" fill="#F0F0EC" stroke="#9A9A94" stroke-width="2"/>
+  <text x="600" y="505" text-anchor="middle" font-size="20" font-weight="700" fill="#33332F">공용 모듈</text>
+  <text x="600" y="539" text-anchor="middle" font-size="18" fill="#4A4A45">Domain · 공용 UI · 클라이언트 인터페이스 · 공용 도구</text>
+
+  <text x="600" y="608" text-anchor="middle" font-size="17" fill="#D9534F">✕  Feature 끼리는 서로 import 하지 않습니다</text>
+  <text x="600" y="640" text-anchor="middle" font-size="17" fill="#555550">자식 delegate 에 case 를 하나 더하면, 다른 모듈에 있는 App 의 switch 도 같이 바뀌어야 합니다</text>
+</svg>
