@@ -2,7 +2,7 @@
 title = "[Tuist] Xcode Cloud 적용하기 (SwiftLint, FirebaseCrashlytics)"
 date = 2024-05-23T17:50:53+09:00
 draft = false
-tags = ["tuist #xcodecloud #ios #ci/cd #swiftlint #firebase"]
+tags = ["tuist", "xcodecloud", "ios", "ci-cd", "swiftlint", "firebase"]
 categories = ["iOS"]
 tistory = "https://leetaek.tistory.com/81"
 +++
